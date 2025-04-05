@@ -1,0 +1,9 @@
+*.sln
+*.old
+*.user
+
+venv
+.vs
+obj
+bin
+
