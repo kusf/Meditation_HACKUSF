@@ -38,15 +38,9 @@ class LLM:
             "image description": re.findall(r"<image>(.+)</image>", input)[0],
         }
 
+    #returns the LLM response
     def get_data(self):
         return self.data
 
     def print_data(self):
         print(self.data)
-
-
-
-if __name__ == "__main__":
-    model = LLM().print_data()
-    while True:
-        model(input()).print_data()
