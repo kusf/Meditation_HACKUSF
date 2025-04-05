@@ -1,0 +1,29 @@
+[gd_scene load_steps=2 format=3 uid="uid://cy5otrj00nf2y"]
+
+[ext_resource type="PackedScene" uid="uid://2jrdco1u2s4i" path="res://Materials/final low poly character  rigged.blend" id="1_gnm2d"]
+
+[node name="LowPolyModel" instance=ExtResource("1_gnm2d")]
+
+[node name="Plane" parent="." index="0"]
+visible = false
+
+[node name="Sphere" parent="metarig/Skeleton3D" index="0"]
+transform = Transform3D(1, 1.42109e-14, 2.84217e-14, -2.84217e-14, 1, 8.9407e-08, -5.68434e-14, -2.98023e-08, 1, 0.143035, 5.67058, 0.744156)
+
+[node name="Sphere_001" parent="metarig/Skeleton3D" index="1"]
+transform = Transform3D(1, 1.42109e-14, 2.84217e-14, -2.84217e-14, 1, 8.9407e-08, -5.68434e-14, -2.98023e-08, 1, 0.143035, 5.67058, 0.744156)
+
+[node name="Lamp_003" parent="." index="2"]
+visible = false
+
+[node name="Lamp_002" parent="." index="3"]
+visible = false
+
+[node name="Lamp_001" parent="." index="4"]
+visible = false
+
+[node name="Lamp" parent="." index="5"]
+visible = false
+
+[node name="Camera" parent="." index="6"]
+visible = false
