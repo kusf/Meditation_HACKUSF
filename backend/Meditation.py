@@ -3,6 +3,7 @@ from llm import LLM
 from promptBridgeReader import *
 from dataBridgeWriter import *
 #from voice import *
+from generate_image import generate_image
 
 # This is the main loop for the code. This loop will first start the AI, throw data into the data bridge, the front end will pick it up, do what's necessary, and then write back to the prompt bridge where this file will
 # continue the progress of the AI.
@@ -19,6 +20,7 @@ if __name__ == "__main__":
     writeDict = model.get_data()        #create base dictionary to write to data bridge
     writeDict['id'] = random.randint(0, 9999)
     writeDictToDataBridge(writeDict)     #passes dict into data bridge
+    generate_image(model.get_data()["image description"])
     print("Writen to data bridge.")
     print('\n')
     #createVoiceWAV(model['text'])      #create voice
@@ -42,3 +44,5 @@ if __name__ == "__main__":
         writeDict['id'] = random.randint(0, 9999)
         writeDictToDataBridge(writeDict)     #passes first prompt results into data bridge
         #createVoiceWAV(model['text'])      #create voice
+
+    
