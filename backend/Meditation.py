@@ -10,9 +10,10 @@ from voice import *
 if __name__ == "__main__":
 
     model = LLM()           #runs the first prompt
-    model.print_data()
-    writeDictToDataBridge(model.get_data())     #passes first prompt results into data bridge
-    createVoiceWAV(model['text'], getDataBridgePath())      #create voice
+    writeDict = model.get_data()        #create base dictionary to write to data bridge
+    writeDict['id'] = -1
+    writeDictToDataBridge(writeDict)     #passes dict into data bridge
+    createVoiceWAV(model['text'])      #create voice
     #writeImageToDataBridge()           #create background
     markDataBridgeComplete()
 
@@ -23,5 +24,11 @@ if __name__ == "__main__":
             time.sleep(5)       #halts the program for 5 seconds
             continue
 
-        newPromptKeys = promptBridgeData['promptKeys']
-        model(input()).print_data()
+        oldID = promptBridgeData['id']
+        newPrompt = promptBridgeData['prompt']
+        model(newPrompt)
+        writeDict = model.get_data()
+        writeDict['id'] = random.randint(0, 9999)
+        writeDictToDataBridge(writeDict)     #passes first prompt results into data bridge
+        createVoiceWAV(model['text'])      #create voice
+        markDataBridgeComplete()

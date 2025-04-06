@@ -11,8 +11,7 @@ speaker_embedding = torch.tensor(embeddings_dataset[7306]["xvector"]).unsqueeze(
 # You can replace this embedding with your own as well.
 
 def getPromptBridgePath():
-    currentProgramPath = Path(os.path.dirname(os.path.realpath(__file__)))      #get this files parent folder
-    return str(currentProgramPath.parent.absolute()) + '\\DataBridge\\voice.wav'             #find Prompt Bridge in parent parent folder w/ write.
+    return Path(os.path.dirname(os.path.realpath(__file__))).parent.absolute() / 'DataBridge' / 'voice.wav'             #find Prompt Bridge in parent parent folder w/ write.
 
 def createVoiceWAV(inputString):
     speech = synthesiser(inputString, forward_params={"speaker_embeddings": speaker_embedding})
