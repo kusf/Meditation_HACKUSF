@@ -11,10 +11,11 @@ def writeDictToDataBridge(inputDict):
     with open(getDataBridgePath(), 'w', encoding='utf-8') as file:       #find Data Bridge in parent parent folder w/ write.
         json.dump(inputDict, file, ensure_ascii=False, indent=4)        #dump dict
 
-def clearDataBridge(inputDict):
-    inputDict['id'] = 0
+def clearDataBridge():
+    clearDict = {}
+    clearDict['id'] = -1
     with open(getDataBridgePath(), 'w', encoding='utf-8') as file:       #find Data Bridge in parent parent folder w/ write.
-        json.dump(inputDict, file, ensure_ascii=False, indent=4)        #dump dict
+        json.dump(clearDict, file, ensure_ascii=False, indent=4)        #dump dict
 
 
 #Not done

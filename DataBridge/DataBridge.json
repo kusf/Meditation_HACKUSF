@@ -1,6 +1,11 @@
 {
-    "white": 2,
-    "id": 5138,
-    "text": "Text",
-    "options": ["Op 1", "Op 2", "Op 3"]
+    "text": "\r\nI'm so glad to hear that you are feeling like a brand-new individual! This is such an exciting time for growth and transformation. Let's continue this journey of self-discovery with fresh energy.\r\n\r\nAs we look at your present state, I sense that you may be experiencing a mix of curiosity, excitement, and perhaps some nervousness about exploring new territories. You're ready to embark on a new adventure with a heart full of wonder!\r\n\r\nNow, let's delve deeper into how you are feeling as this new person:\r\n\r\n",
+    "options": [
+        "Full of curiosity and eager to explore every nook and cranny?",
+        "Eager for discovery, like a child first waking up after the longest night?",
+        "Ready to take on any challenge with an adventurous spirit?",
+        "Filled with excitement and anticipation, as if standing at the edge of a cliff ready to leap into unknown waters?"
+    ],
+    "image description": "Newly discovered forest",
+    "id": 6805
 }
