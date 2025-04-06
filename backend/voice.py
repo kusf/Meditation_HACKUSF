@@ -16,3 +16,16 @@ def getPromptBridgePath():
 def createVoiceWAV(inputString):
     speech = synthesiser(inputString, forward_params={"speaker_embeddings": speaker_embedding})
     sf.write(getPromptBridgePath(), speech["audio"], samplerate=speech["sampling_rate"])
+
+#print(pipeline.tokenizer)
+## Testing The Wav Creation
+# speech = synthesiser("As we begin this meditation, I invite you to take a deep breath in through", forward_params={"speaker_embeddings": speaker_embedding})
+# # Read the text from the "voiceText.txt" file
+# with open("voiceText.txt", "r") as file:
+#     text = file.read()
+
+# speech = synthesiser(text, forward_params={"speaker_embeddings": speaker_embedding})
+
+# sf.write("speech.wav", speech["audio"], samplerate=speech["sampling_rate"])
+
+# sf.write("speech.wav", speech["audio"], samplerate=speech["sampling_rate"])
