@@ -10,5 +10,5 @@ def getPromptBridgePath():
 def readPromptBridgeData():
     returnResult = {}
     with open(getPromptBridgePath(), 'r') as file:       #find Prompt Bridge in parent parent folder w/ write.
-        returnResult = json.loads(file)
+        returnResult = json.load(file)
     return returnResult

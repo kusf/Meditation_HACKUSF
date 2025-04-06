@@ -15,10 +15,23 @@ public partial class Main : Node
 	private string[] options;
 	private int oldID = -1;
 
-	public override void _Ready()
+	private string GetDataBridgePath()
 	{
-		string pngDir = "C:\\Contents\\Projects\\Hackathons\\Meditation\\frontend\\Images\\wallTexture.png";
-		Image image = Image.LoadFromFile(pngDir);
+        string[] pathPieces = { "C:", "Contents", "Projects", "Hackathons", "Meditation", "DataBridge", "DataBridge.json" };
+        return Path.Combine(pathPieces);
+    }
+
+    private string GetPromptBridgePath()
+    {
+        string[] pathPieces = { "C:", "Contents", "Projects", "Hackathons", "Meditation", "DataBridge", "PromptBridge.json" };
+        return Path.Combine(pathPieces);
+    }
+
+    public override void _Ready()
+	{
+        string[] pathPieces = { "C:", "Contents", "Projects", "Hackathons", "Meditation", "frontend", "Images", "wallTexture.png" };
+        string finalPath = Path.Combine(pathPieces);
+        Image image = Image.LoadFromFile(finalPath);
 		StandardMaterial3D newTextureMaterial = new StandardMaterial3D();
 		newTextureMaterial.AlbedoTexture = ImageTexture.CreateFromImage(image);
 		GetChild<MeshInstance3D>(4).SetSurfaceOverrideMaterial(0, newTextureMaterial);
@@ -26,7 +39,7 @@ public partial class Main : Node
 		options = new string[4];
 
 
-		JObject jobject = JObject.Parse(File.ReadAllText("C:\\Contents\\Projects\\Hackathons\\Meditation\\DataBridge\\DataBridge.json"));
+        JObject jobject = JObject.Parse(File.ReadAllText(GetDataBridgePath()));
 		dynamic dynamicObj = JsonConvert.DeserializeObject(jobject.ToString());
 		if (dynamicObj != null)
 		{
@@ -51,10 +64,10 @@ public partial class Main : Node
 		if (deltaTime >= PromptRefreshTime)
 		{
             //run first prompt
-            //Json.ParseString(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "\\DataBridge\\DataBridge.json"));
+            //Json.ParseString(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "", "DataBridge", "DataBridge.json"));
             deltaTime -= PromptRefreshTime;
-            JObject jobject = JObject.Parse(File.ReadAllText("C:\\Contents\\Projects\\Hackathons\\Meditation\\DataBridge\\DataBridge.json"));
-			dynamic dynamicObj = JsonConvert.DeserializeObject(jobject.ToString());
+            JObject jobject = JObject.Parse(File.ReadAllText(GetPromptBridgePath()));
+            dynamic dynamicObj = JsonConvert.DeserializeObject(jobject.ToString());
 			if (dynamicObj == null)
 				return;
 			if (dynamicObj["id"] == oldID)		//error checks
@@ -85,7 +98,7 @@ public partial class Main : Node
 		Dictionary<string, object> jSonWritesDict = new Dictionary<string, object>();
 		jSonWritesDict.Add("prompt", option);
 		jSonWritesDict.Add("id", Random.Shared.Next(0, 9999 + 1));
-		File.WriteAllText("C:\\Contents\\Projects\\Hackathons\\Meditation\\DataBridge\\DataBridge.json", JObject.FromObject(jSonWritesDict).ToString());
+		File.WriteAllText(GetPromptBridgePath(), JObject.FromObject(jSonWritesDict).ToString());
 	}
 
 	private void OnOption1Pressed()
