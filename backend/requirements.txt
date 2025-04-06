@@ -48,3 +48,6 @@ transformers
 torch
 datasets
 soundfile
+nltk
+pydub
+sentencepiece
