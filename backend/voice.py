@@ -22,7 +22,7 @@ def getVoiceWAVPath():
 def getVoiceTXTPath():
     return Path(os.path.dirname(os.path.realpath(__file__))).parent.absolute() / 'DataBridge' / 'voice.txt'             #find Prompt Bridge in parent parent folder w/ write.
 
-def createVoiceWAV(inputString):
+def createVoiceWAV():
     #speech = synthesiser(inputString, forward_params={"speaker_embeddings": speaker_embedding})
     #sf.write(getVoiceWAVPath(), speech["audio"], samplerate=speech["sampling_rate"])
     with open(getVoiceTXTPath(), "r") as file:
@@ -98,3 +98,6 @@ def text_batches(text: str, max: int = 600):
     batches.append(temp)
     #print(batches)
     return batches
+
+if __name__ == "__main__":
+    createVoiceWAV()
