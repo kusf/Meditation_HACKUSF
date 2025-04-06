@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://d3vyafkrw63vs" path="res://Main.cs" id="1_glv2v"]
 [ext_resource type="PackedScene" uid="uid://cy5otrj00nf2y" path="res://Materials/LowPolyModel.tscn" id="2_uu6xs"]
-[ext_resource type="FontFile" uid="uid://bwutqok366ifs" path="res://Fonts/Raleway-Regular.ttf" id="3_r0du0"]
+[ext_resource type="FontFile" uid="uid://d22dax6rnn8wy" path="res://Fonts/meditative.ttf" id="3_trn2v"]
 [ext_resource type="AudioStream" uid="uid://dog7i1oy7wj6a" path="res://assets/music/1.mp3" id="4_trn2v"]
 [ext_resource type="AudioStream" uid="uid://b2dd3n3r4w5x4" path="res://assets/music/2.mp3" id="5_03owx"]
 [ext_resource type="AudioStream" uid="uid://c5aapwdcqim3j" path="res://assets/music/3.mp3" id="6_wkp8b"]
@@ -68,7 +68,7 @@ offset_left = 150.0
 offset_top = 650.0
 offset_right = 850.0
 offset_bottom = 1050.0
-theme_override_fonts/font = ExtResource("3_r0du0")
+theme_override_fonts/font = ExtResource("3_trn2v")
 theme_override_font_sizes/font_size = 64
 text = "<Option 1>"
 autowrap_mode = 3
@@ -80,7 +80,7 @@ offset_left = 1070.0
 offset_top = 650.0
 offset_right = 1770.0
 offset_bottom = 1050.0
-theme_override_fonts/font = ExtResource("3_r0du0")
+theme_override_fonts/font = ExtResource("3_trn2v")
 theme_override_font_sizes/font_size = 64
 text = "<Option 2>"
 autowrap_mode = 3
@@ -100,7 +100,7 @@ offset_left = 32.0
 offset_top = 550.0
 offset_right = 592.0
 offset_bottom = 1050.0
-theme_override_fonts/font = ExtResource("3_r0du0")
+theme_override_fonts/font = ExtResource("3_trn2v")
 theme_override_font_sizes/font_size = 64
 text = "<Option 1>"
 autowrap_mode = 3
@@ -112,7 +112,7 @@ offset_left = 672.0
 offset_top = 550.0
 offset_right = 1232.0
 offset_bottom = 1050.0
-theme_override_fonts/font = ExtResource("3_r0du0")
+theme_override_fonts/font = ExtResource("3_trn2v")
 theme_override_font_sizes/font_size = 64
 text = "<Option 2>"
 autowrap_mode = 3
@@ -124,7 +124,7 @@ offset_left = 1312.0
 offset_top = 550.0
 offset_right = 1872.0
 offset_bottom = 1050.0
-theme_override_fonts/font = ExtResource("3_r0du0")
+theme_override_fonts/font = ExtResource("3_trn2v")
 theme_override_font_sizes/font_size = 64
 text = "<Option 3>"
 autowrap_mode = 3
@@ -144,7 +144,7 @@ offset_left = 32.0
 offset_top = 460.0
 offset_right = 472.0
 offset_bottom = 1060.0
-theme_override_fonts/font = ExtResource("3_r0du0")
+theme_override_fonts/font = ExtResource("3_trn2v")
 theme_override_font_sizes/font_size = 64
 text = "<Option 1>"
 autowrap_mode = 3
@@ -156,7 +156,7 @@ offset_left = 504.0
 offset_top = 460.0
 offset_right = 944.0
 offset_bottom = 1060.0
-theme_override_fonts/font = ExtResource("3_r0du0")
+theme_override_fonts/font = ExtResource("3_trn2v")
 theme_override_font_sizes/font_size = 64
 text = "<Option 2>"
 autowrap_mode = 3
@@ -168,7 +168,7 @@ offset_left = 976.0
 offset_top = 460.0
 offset_right = 1416.0
 offset_bottom = 1060.0
-theme_override_fonts/font = ExtResource("3_r0du0")
+theme_override_fonts/font = ExtResource("3_trn2v")
 theme_override_font_sizes/font_size = 64
 text = "<Option 3>"
 autowrap_mode = 3
@@ -180,7 +180,7 @@ offset_left = 1448.0
 offset_top = 460.0
 offset_right = 1888.0
 offset_bottom = 1060.0
-theme_override_fonts/font = ExtResource("3_r0du0")
+theme_override_fonts/font = ExtResource("3_trn2v")
 theme_override_font_sizes/font_size = 64
 text = "<Option 4>"
 autowrap_mode = 3
