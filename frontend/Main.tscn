@@ -28,10 +28,11 @@ size = Vector2(32, 32)
 script = ExtResource("1_glv2v")
 
 [node name="MainCamera" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 6.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0176628, 4.0088, 6.49978)
 current = true
 
 [node name="LowPolyModel" parent="." instance=ExtResource("2_uu6xs")]
+transform = Transform3D(0.618692, 0.0300289, 0.422869, -0.00563389, 0.748632, -0.0449193, -0.423897, 0.0338784, 0.617789, -4.91599, 1.07446, 0.553848)
 
 [node name="Environment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_uu6xs")
