@@ -13,7 +13,7 @@ if __name__ == "__main__":
     writeDict = model.get_data()        #create base dictionary to write to data bridge
     writeDict['id'] = -1
     writeDictToDataBridge(writeDict)     #passes dict into data bridge
-    createVoiceWAV(model['text'], getDataBridgePath())      #create voice
+    createVoiceWAV(model['text'])      #create voice
     #writeImageToDataBridge()           #create background
     markDataBridgeComplete()
 
@@ -30,5 +30,5 @@ if __name__ == "__main__":
         writeDict = model.get_data()
         writeDict['id'] = random.randint(0, 9999)
         writeDictToDataBridge(writeDict)     #passes first prompt results into data bridge
-        createVoiceWAV(model['text'], getDataBridgePath())      #create voice
+        createVoiceWAV(model['text'])      #create voice
         markDataBridgeComplete()

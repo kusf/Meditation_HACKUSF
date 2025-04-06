@@ -1,4 +1,6 @@
 {
     "white": 2,
-    "id": 5138
+    "id": 5138,
+    "text": "Text",
+    "options": ["Op 1", "Op 2", "Op 3"]
 }

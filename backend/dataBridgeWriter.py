@@ -5,8 +5,7 @@ from pathlib import Path
 import random
 
 def getDataBridgePath():
-    currentProgramPath = Path(os.path.dirname(os.path.realpath(__file__)))      #get this files parent folder
-    return str(currentProgramPath.parent.absolute()) + '\\DataBridge\\DataBridge.json'             #find Data Bridge in parent parent folder w/ write.
+    return Path(os.path.dirname(os.path.realpath(__file__))).parent.absolute() / 'DataBridge' / 'DataBridge.json'             #find Prompt Bridge in parent parent folder w/ write.
 
 def writeDictToDataBridge(inputDict):
     with open(getDataBridgePath(), 'w', encoding='utf-8') as file:       #find Data Bridge in parent parent folder w/ write.
