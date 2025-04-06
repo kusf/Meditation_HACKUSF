@@ -26,3 +26,8 @@ frontend/Fonts/Raleway-SemiBold.ttf.import
 frontend/Fonts/Raleway-Thin.ttf
 frontend/Fonts/Raleway-Thin.ttf.import
 Meditation.pyproj
+backend/__pycache__/promptBridgeReader.cpython-313.pyc
+backend/__pycache__/llm.cpython-313.pyc
+backend/__pycache__/generate_image.cpython-313.pyc
+backend/__pycache__/dataBridgeWriter.cpython-313.pyc
+.DS_Store
