@@ -181,6 +181,11 @@ text = "<Option 4>"
 autowrap_mode = 3
 clip_text = true
 
+[node name="WorldListener" type="AudioListener3D" parent="."]
+current = true
+
+[node name="VoicePlayer" type="AudioStreamPlayer3D" parent="."]
+
 [connection signal="pressed" from="MainUI/UI/MainUIControl/TwoPanel/Option1" to="." method="OnOption1Pressed"]
 [connection signal="pressed" from="MainUI/UI/MainUIControl/TwoPanel/Option2" to="." method="OnOption2Pressed"]
 [connection signal="pressed" from="MainUI/UI/MainUIControl/ThreePanel/Option1" to="." method="OnOption1Pressed"]

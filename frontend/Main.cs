@@ -12,6 +12,7 @@ public partial class Main : Node
 	private MeshInstance3D wallInstance;
 	private Control[] panelControls;
 	private Process cmdApp;
+	private AudioStreamPlayer3D voicePlayer;
 	private double deltaTime;
 	private const float PromptRefreshTime = 5f;
 	private string[] options;
@@ -29,7 +30,19 @@ public partial class Main : Node
 		return Path.Combine(pathPieces);
 	}
 
-	private string GetBackendPath()
+	private string GetGeneratedImagePath()
+	{
+		string[] pathPieces = { "C:", "Contents", "Projects", "Hackathons", "Meditation", "DataBridge", "image.png" };
+		return Path.Combine(pathPieces);
+	}
+
+    private string GetGeneratedVoicePath()
+    {
+        string[] pathPieces = { "C:", "Contents", "Projects", "Hackathons", "Meditation", "DataBridge", "voice.wav" };
+        return Path.Combine(pathPieces);
+    }
+
+    private string GetBackendPath()
 	{
 		string[] pathPieces = { "C:", "Contents", "Projects", "Hackathons", "Meditation", "backend", "Meditation.py" };
 		return Path.Combine(pathPieces);
@@ -40,13 +53,7 @@ public partial class Main : Node
 		//string strCmdText;
 		//strCmdText = "C:\\Contents\\Projects\\Hackathons\\Meditation\\venv\\Scripts\\python.exe C:/Contents/Projects/Hackathons/Meditation/backend/Meditation.py";
 		//cmdApp = Process.Start("CMD.exe", strCmdText);
-
-		string[] pathPieces = { "C:", "Contents", "Projects", "Hackathons", "Meditation", "frontend", "Images", "wallTexture.png" };
-		string finalPath = Path.Combine(pathPieces);
-		Image image = Image.LoadFromFile(finalPath);
-		StandardMaterial3D newTextureMaterial = new StandardMaterial3D();
-		newTextureMaterial.AlbedoTexture = ImageTexture.CreateFromImage(image);
-		GetChild<MeshInstance3D>(4).SetSurfaceOverrideMaterial(0, newTextureMaterial);
+        voicePlayer = GetNode<AudioStreamPlayer3D>("VoicePlayer");
 		panelControls = new Control[3] { GetNode("MainUI/UI/MainUIControl/TwoPanel") as Control, GetNode("MainUI/UI/MainUIControl/ThreePanel") as Control, GetNode("MainUI/UI/MainUIControl/FourPanel") as Control };
 		options = new string[4];
 	}
@@ -54,29 +61,31 @@ public partial class Main : Node
 	public override void _Process(double delta)
 	{
 		deltaTime += delta;
-		if (deltaTime >= PromptRefreshTime)
+		if (deltaTime >= PromptRefreshTime && !voicePlayer.Playing)
 		{
 			//run first prompt
 			//Json.ParseString(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "", "DataBridge", "DataBridge.json"));
-			GD.Print("Attempting get JSON");
 			deltaTime -= PromptRefreshTime;
-			JObject jobject = JObject.Parse(File.ReadAllText(GetDataBridgePath()));
-			dynamic dynamicObj = JsonConvert.DeserializeObject(jobject.ToString());
-			GD.Print(dynamicObj["id"]);
-			if (dynamicObj == null)
+			JObject dataBridgeData = JObject.Parse(File.ReadAllText(GetDataBridgePath()));
+			dynamic dataBridgeObj = JsonConvert.DeserializeObject(dataBridgeData.ToString());
+			if (dataBridgeObj == null)
 				return;
-			if (dynamicObj["id"] == oldID)		//error checks
+			if (dataBridgeObj["id"] == oldID)      //error checks
+			{
+				GD.Print("Waiting for new JSON...");
 				return;
+			}
 
-			GD.Print("Reading JSON");
-			oldID = dynamicObj["id"];
-			string promptText = dynamicObj["text"];     //data extraction
+			GD.Print("Reading new JSON");
+			oldID = dataBridgeObj["id"];
+			string promptText = dataBridgeObj["text"];     //data extraction
+			int intensity = dataBridgeObj["intensity"];
 			int validIndex = 0;
 			for (int i = 0; i < 4; i++)
 			{
 				try
 				{
-					options[i] = dynamicObj["options"][i];
+					options[i] = dataBridgeObj["options"][i];
 					validIndex++;
 				}
 				catch (Exception e)
@@ -93,7 +102,14 @@ public partial class Main : Node
 				Button button = panelControls[validIndex].GetChild(i) as Button;
 				button.Text = options[i];
 			}
-			panelControls[validIndex].Visible = true;
+            Image image = Image.LoadFromFile(GetGeneratedImagePath());
+            StandardMaterial3D newTextureMaterial = new StandardMaterial3D();
+            newTextureMaterial.AlbedoTexture = ImageTexture.CreateFromImage(image);
+            //newTextureMaterial.NextPass = distortionShader;
+            GetChild<MeshInstance3D>(4).SetSurfaceOverrideMaterial(0, newTextureMaterial);
+            voicePlayer.Stream = AudioStreamWav.LoadFromFile(GetGeneratedVoicePath());
+			voicePlayer.Play();
+            panelControls[validIndex].Visible = true;
 		}
 	}
 
@@ -110,6 +126,7 @@ public partial class Main : Node
 		Dictionary<string, object> jSonWritesDict = new Dictionary<string, object>();
 		jSonWritesDict.Add("prompt", option);
 		jSonWritesDict.Add("id", Random.Shared.Next(0, 9999 + 1));
+		GD.Print(option);
 		File.WriteAllText(GetPromptBridgePath(), JObject.FromObject(jSonWritesDict).ToString());
 	}
 
