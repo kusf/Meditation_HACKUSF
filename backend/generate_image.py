@@ -6,7 +6,7 @@ def generate_image(prompt: str) -> None:
     pipe = StableDiffusionPipeline.from_pretrained(model_id, torch_dtype=torch.float16)
     pipe = pipe.to("mps") #mac only, use cuda for other
 
-    image = pipe(prompt).images[0]  
+    image = pipe("I am going to give you a prompt. Make this picture atmospheric and spiritual, yet not religion. Do not inlude human beings. I repeat, no humans." + prompt).images[0]  
     
     image.save("image.png")
 
