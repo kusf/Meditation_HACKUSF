@@ -13,10 +13,31 @@ public partial class Main : Node
 	private Control[] panelControls;
 	private Process cmdApp;
 	private AudioStreamPlayer3D voicePlayer;
-	private double deltaTime;
+    private AudioStreamPlayer3D musicPlayer;
+    private double deltaTime;
 	private const float PromptRefreshTime = 5f;
 	private string[] options;
 	private int oldID = -1;
+
+	private string[] bones = new string[17] {
+		"nose",
+		"left_shoulder",
+		"right_shoulder",
+		"left_elbow",
+		"right_elbow",
+		"left_wrist",
+		"right_wrist",
+		"left_index",
+		"right_index",
+		"left_hip",
+		"right_hip",
+		"left_knee",
+		"right_knee",
+		"left_ankle",
+		"right_ankle",
+		"left_foot_index",
+		"right_foot_index"
+	};
 
 	private string GetDataBridgePath()
 	{
@@ -55,11 +76,12 @@ public partial class Main : Node
 
 	public override void _Ready()
 	{
-		//string strCmdText;
-		//strCmdText = "C:\\Contents\\Projects\\Hackathons\\Meditation\\venv\\Scripts\\python.exe C:/Contents/Projects/Hackathons/Meditation/backend/Meditation.py";
-		//cmdApp = Process.Start("CMD.exe", strCmdText);
-		voicePlayer = GetNode<AudioStreamPlayer3D>("VoicePlayer");
-		panelControls = new Control[3] { GetNode("MainUI/UI/MainUIControl/TwoPanel") as Control, GetNode("MainUI/UI/MainUIControl/ThreePanel") as Control, GetNode("MainUI/UI/MainUIControl/FourPanel") as Control };
+        //string strCmdText;
+        //strCmdText = "C:\\Contents\\Projects\\Hackathons\\Meditation\\venv\\Scripts\\python.exe C:/Contents/Projects/Hackathons/Meditation/backend/Meditation.py";
+        //cmdApp = Process.Start("CMD.exe", strCmdText);
+        voicePlayer = GetNode<AudioStreamPlayer3D>("VoicePlayer");
+        musicPlayer = GetNode<AudioStreamPlayer3D>("MusicPlayer");
+        panelControls = new Control[3] { GetNode("MainUI/UI/MainUIControl/TwoPanel") as Control, GetNode("MainUI/UI/MainUIControl/ThreePanel") as Control, GetNode("MainUI/UI/MainUIControl/FourPanel") as Control };
 		options = new string[4];
 	}
 
@@ -107,12 +129,13 @@ public partial class Main : Node
 				Button button = panelControls[validIndex].GetChild(i) as Button;
 				button.Text = options[i];
 			}
-			Image image = Image.LoadFromFile(GetGeneratedImagePath());
-			StandardMaterial3D newTextureMaterial = new StandardMaterial3D();
-			newTextureMaterial.AlbedoTexture = ImageTexture.CreateFromImage(image);
-			//newTextureMaterial.NextPass = distortionShader;
-			GetChild<MeshInstance3D>(4).SetSurfaceOverrideMaterial(0, newTextureMaterial);
-			voicePlayer.Stream = AudioStreamWav.LoadFromFile(GetGeneratedVoicePath());
+            Image image = Image.LoadFromFile(GetGeneratedImagePath());
+            StandardMaterial3D newTextureMaterial = new StandardMaterial3D();
+            newTextureMaterial.AlbedoTexture = ImageTexture.CreateFromImage(image);
+            //newTextureMaterial.NextPass = distortionShader;
+            GetChild<MeshInstance3D>(4).SetSurfaceOverrideMaterial(0, newTextureMaterial);
+			(musicPlayer.GetChild(intensity - 1) as AudioStreamPlayer).Play();
+            voicePlayer.Stream = AudioStreamWav.LoadFromFile(GetGeneratedVoicePath());
 			voicePlayer.Play();
 			panelControls[validIndex].Visible = true;
 		}
@@ -134,6 +157,22 @@ public partial class Main : Node
 		GD.Print(option);
 		File.WriteAllText(GetPromptBridgePath(), JObject.FromObject(jSonWritesDict).ToString());
 	}
+
+	private void ExtractSkeletonJSON()
+	{
+        JObject dataBridgeData = JObject.Parse(File.ReadAllText(GetDataBridgePath()));
+        dynamic dataBridgeObj = JsonConvert.DeserializeObject(dataBridgeData.ToString());
+        if (dataBridgeObj == null)
+            return;
+
+		int[] keys = dataBridgeData.GetEnumerator();
+
+		for (int i = 0; i < 17; i++)
+		{
+
+			Vector3 position = new Vector3(dataBridgeObj[bones[i]][0], dataBridgeObj[i][1], dataBridgeObj[i][2]);
+        }
+    }
 
 	private void OnOption1Pressed()
 	{

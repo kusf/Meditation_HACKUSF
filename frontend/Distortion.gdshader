@@ -5,6 +5,7 @@ void vertex() {
 }
 
 void fragment() {
+	vec2 UV = 
 	COLOR = texture(TEXTURE, UV); // Read from texture
   	
 }
