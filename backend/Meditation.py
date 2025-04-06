@@ -19,7 +19,6 @@ if __name__ == "__main__":
     model.print_data()
     writeDict = model.get_data()        #create base dictionary to write to data bridge
     writeDict['id'] = random.randint(0, 9999)
-    writeDictToDataBridge(writeDict)     #passes dict into data bridge
 
     f = open(getVoiceTXTPath(), "w")
     f.write(writeDict["text"])
@@ -32,6 +31,7 @@ if __name__ == "__main__":
     #createVoiceWAV(model['text'])      #create voice
     #writeImageToDataBridge()           #create background
 
+    writeDictToDataBridge(writeDict)     #passes dict into data bridge
     oldID = -1
     while True:
         promptBridgeData = readPromptBridgeData()
@@ -48,11 +48,10 @@ if __name__ == "__main__":
         model.print_data()
         writeDict = model.get_data()
         writeDict['id'] = random.randint(0, 9999)
-        writeDictToDataBridge(writeDict)     #passes first prompt results into data bridge
         f = open(getVoiceTXTPath(), "w")
         f.write(writeDict["text"])
         f.close()
         createVoiceWAV()
         generate_image(model.get_data()["image description"])
-
+        writeDictToDataBridge(writeDict)     #passes first prompt results into data bridge
     

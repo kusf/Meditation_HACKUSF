@@ -35,7 +35,7 @@ class LLM:
                 "text": input[: input.index("<option>")],
                 "options": re.findall(r"<option>(.+)</option>", input),
                 "image description": re.findall(r"<image>(.+)</image>", input)[0],
-                "intensity": re.findall(r"<intensity>(.+)</intensity>", input)[0],
+                "intensity": int(re.findall(r"<intensity>(.+)</intensity>", input)[0]),
             }
         except re.PatternError:
             self.__call__(
@@ -45,7 +45,7 @@ class LLM:
                 "text": input[: input.index("<option>")],
                 "options": re.findall(r"<option>(.+)</option>", input),
                 "image description": re.findall(r"<image>(.+)</image>", input)[0],
-                "intensity": re.findall(r"<intensity>(.+)</intensity>", input)[0],
+                "intensity": int(re.findall(r"<intensity>(.+)</intensity>", input)[0]),
             }
 
     # returns the LLM response
