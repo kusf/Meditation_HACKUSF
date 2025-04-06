@@ -58,14 +58,17 @@ public partial class Main : Node
 		{
 			//run first prompt
 			//Json.ParseString(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "", "DataBridge", "DataBridge.json"));
+			GD.Print("Attempting get JSON");
 			deltaTime -= PromptRefreshTime;
-			JObject jobject = JObject.Parse(File.ReadAllText(GetPromptBridgePath()));
+			JObject jobject = JObject.Parse(File.ReadAllText(GetDataBridgePath()));
 			dynamic dynamicObj = JsonConvert.DeserializeObject(jobject.ToString());
+			GD.Print(dynamicObj["id"]);
 			if (dynamicObj == null)
 				return;
 			if (dynamicObj["id"] == oldID)		//error checks
 				return;
 
+			GD.Print("Reading JSON");
 			oldID = dynamicObj["id"];
 			string promptText = dynamicObj["text"];     //data extraction
 			int validIndex = 0;
