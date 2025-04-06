@@ -1,9 +1,5 @@
-ollama
-transformers
-torch
-soundfile
-datasets
 absl-py
+accelerate
 annotated-types
 anyio
 attrs
@@ -11,6 +7,8 @@ certifi
 cffi
 contourpy
 cycler
+datasets
+diffusers
 exceptiongroup
 flatbuffers
 fonttools
@@ -27,6 +25,7 @@ matplotlib
 ml_dtypes
 numpy
 ollama
+ollama
 opencv-contrib-python
 opencv-python
 opt_einsum
@@ -35,8 +34,8 @@ pillow
 pip
 protobuf
 pycparser
-pydantic_core
 pydantic
+pydantic_core
 pyparsing
 python-dateutil
 scipy
@@ -44,7 +43,9 @@ setuptools
 six
 sniffio
 sounddevice
-typing_extensions
+soundfile
+torch
+transformers
 typing-inspection
+typing_extensions
 zipp
-diffusers
