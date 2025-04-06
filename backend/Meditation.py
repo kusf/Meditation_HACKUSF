@@ -18,23 +18,21 @@ if __name__ == "__main__":
     model = LLM()           #runs the first prompt
     model.print_data()
     writeDict = model.get_data()        #create base dictionary to write to data bridge
-    writeDict['id'] = random.randint(0, 9999)
+    writeDict['id'] = random.randint(0, 9999)       #generate random ID
 
-    f = open(getVoiceTXTPath(), "w")
+    f = open(getVoiceTXTPath(), "w")        #write value of the prompt for voice transcription
     f.write(writeDict["text"])
     f.close()
 
-    createVoiceWAV()
-    generate_image(model.get_data()["image description"])
+    createVoiceWAV()        #create voice
+    generate_image(model.get_data()["image description"])       #generate image
     print("Writen to data bridge.")
     print('\n')
-    #createVoiceWAV(model['text'])      #create voice
-    #writeImageToDataBridge()           #create background
 
     writeDictToDataBridge(writeDict)     #passes dict into data bridge
     oldID = -1
     while True:
-        promptBridgeData = readPromptBridgeData()
+        promptBridgeData = readPromptBridgeData()       #waits for the prompt to respond.
         if promptBridgeData['id'] == oldID:
             print("Sleeping...")
             time.sleep(5)       #halts the program for 5 seconds

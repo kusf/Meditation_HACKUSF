@@ -150,17 +150,6 @@ public partial class Main : Node
 		}
 		if (!voicePlayer.Playing && !clickedButton)
 			panelControls[displayIndex].Visible = true;
-
-		//shaderTime += delta;
-		//shader.SetShaderParameter("imageOffset", 24f * Math.Sin(shaderTime));
-		//shader.SetShaderParameter("imageStretch", 2f * Math.Abs(Math.Cos(shaderTime) + 0.05f));
-		//shader.SetShaderParameter("magnifier", (Math.Sin(shaderTime) / 2f) + 1f);
-
-	}
-
-	public override void _ExitTree()
-	{
-		//cmdApp.Close();
 	}
 
 	private void SetUpPromptBridge(string option)
@@ -175,22 +164,6 @@ public partial class Main : Node
 		clickedButton = true;
 
     }
-
-	//private void ExtractSkeletonJSON()
-	//{
-		//JObject dataBridgeData = JObject.Parse(File.ReadAllText(GetDataBridgePath()));
-		//dynamic dataBridgeObj = JsonConvert.DeserializeObject(dataBridgeData.ToString());
-		//if (dataBridgeObj == null)
-			//return;
-//
-		//int[] keys = dataBridgeData.GetEnumerator();
-//
-		//for (int i = 0; i < 17; i++)
-		//{
-//
-			//Vector3 position = new Vector3(dataBridgeObj[bones[i]][0], dataBridgeObj[i][1], dataBridgeObj[i][2]);
-		//}
-	//}
 
 	private void OnOption1Pressed()
 	{
