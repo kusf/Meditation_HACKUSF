@@ -20,32 +20,37 @@ public partial class Main : Node
 
 	private string GetDataBridgePath()
 	{
-		string[] pathPieces = { "C:", "Contents", "Projects", "Hackathons", "Meditation", "DataBridge", "DataBridge.json" };
-		return Path.Combine(pathPieces);
+		// string[] pathPieces = { "C:", "Contents", "Projects", "Hackathons", "Meditation", "DataBridge", "DataBridge.json" };
+		// return Path.Combine(pathPieces);
+		return "/Users/cool/Documents/GitHub/Meditation_HACKUSF/DataBridge/DataBridge.json";
 	}
 
 	private string GetPromptBridgePath()
 	{
-		string[] pathPieces = { "C:", "Contents", "Projects", "Hackathons", "Meditation", "DataBridge", "PromptBridge.json" };
-		return Path.Combine(pathPieces);
+		// string[] pathPieces = { "C:", "Contents", "Projects", "Hackathons", "Meditation", "DataBridge", "PromptBridge.json" };
+		// return Path.Combine(pathPieces);
+		return "/Users/cool/Documents/GitHub/Meditation_HACKUSF/DataBridge/PromptBridge.json";
 	}
 
 	private string GetGeneratedImagePath()
 	{
-		string[] pathPieces = { "C:", "Contents", "Projects", "Hackathons", "Meditation", "DataBridge", "image.png" };
-		return Path.Combine(pathPieces);
+		// string[] pathPieces = { "C:", "Contents", "Projects", "Hackathons", "Meditation", "DataBridge", "image.png" };
+		// return Path.Combine(pathPieces);
+		return "/Users/cool/Documents/GitHub/Meditation_HACKUSF/backend/image.png";
 	}
 
-    private string GetGeneratedVoicePath()
-    {
-        string[] pathPieces = { "C:", "Contents", "Projects", "Hackathons", "Meditation", "DataBridge", "voice.wav" };
-        return Path.Combine(pathPieces);
-    }
-
-    private string GetBackendPath()
+	private string GetGeneratedVoicePath()
 	{
-		string[] pathPieces = { "C:", "Contents", "Projects", "Hackathons", "Meditation", "backend", "Meditation.py" };
-		return Path.Combine(pathPieces);
+		// string[] pathPieces = { "C:", "Contents", "Projects", "Hackathons", "Meditation", "DataBridge", "voice.wav" };
+		// return Path.Combine(pathPieces);
+		return "/Users/cool/Documents/GitHub/Meditation_HACKUSF/DataBridge/voice.wav";
+	}
+
+	private string GetBackendPath()
+	{
+		// string[] pathPieces = { "C:", "Contents", "Projects", "Hackathons", "Meditation", "backend", "Meditation.py" };
+		// return Path.Combine(pathPieces);
+		return "/Users/cool/Documents/GitHub/Meditation_HACKUSF/backend/Meditation.py";
 	}
 
 	public override void _Ready()
@@ -53,7 +58,7 @@ public partial class Main : Node
 		//string strCmdText;
 		//strCmdText = "C:\\Contents\\Projects\\Hackathons\\Meditation\\venv\\Scripts\\python.exe C:/Contents/Projects/Hackathons/Meditation/backend/Meditation.py";
 		//cmdApp = Process.Start("CMD.exe", strCmdText);
-        voicePlayer = GetNode<AudioStreamPlayer3D>("VoicePlayer");
+		voicePlayer = GetNode<AudioStreamPlayer3D>("VoicePlayer");
 		panelControls = new Control[3] { GetNode("MainUI/UI/MainUIControl/TwoPanel") as Control, GetNode("MainUI/UI/MainUIControl/ThreePanel") as Control, GetNode("MainUI/UI/MainUIControl/FourPanel") as Control };
 		options = new string[4];
 	}
@@ -79,7 +84,7 @@ public partial class Main : Node
 			GD.Print("Reading new JSON");
 			oldID = dataBridgeObj["id"];
 			string promptText = dataBridgeObj["text"];     //data extraction
-			int intensity = dataBridgeObj["intensity"];
+			int intensity = int.Parse(dataBridgeObj["intensity"]);
 			int validIndex = 0;
 			for (int i = 0; i < 4; i++)
 			{
@@ -102,14 +107,14 @@ public partial class Main : Node
 				Button button = panelControls[validIndex].GetChild(i) as Button;
 				button.Text = options[i];
 			}
-            Image image = Image.LoadFromFile(GetGeneratedImagePath());
-            StandardMaterial3D newTextureMaterial = new StandardMaterial3D();
-            newTextureMaterial.AlbedoTexture = ImageTexture.CreateFromImage(image);
-            //newTextureMaterial.NextPass = distortionShader;
-            GetChild<MeshInstance3D>(4).SetSurfaceOverrideMaterial(0, newTextureMaterial);
-            voicePlayer.Stream = AudioStreamWav.LoadFromFile(GetGeneratedVoicePath());
+			Image image = Image.LoadFromFile(GetGeneratedImagePath());
+			StandardMaterial3D newTextureMaterial = new StandardMaterial3D();
+			newTextureMaterial.AlbedoTexture = ImageTexture.CreateFromImage(image);
+			//newTextureMaterial.NextPass = distortionShader;
+			GetChild<MeshInstance3D>(4).SetSurfaceOverrideMaterial(0, newTextureMaterial);
+			voicePlayer.Stream = AudioStreamWav.LoadFromFile(GetGeneratedVoicePath());
 			voicePlayer.Play();
-            panelControls[validIndex].Visible = true;
+			panelControls[validIndex].Visible = true;
 		}
 	}
 
