@@ -77,3 +77,6 @@ def apply_reverb(sound, delay_ms=100, decay=0.5, repeats=3):
         # Overlay echo onto the original sound
         combined = combined.overlay(echo)
     return combined
+
+if __name__ == "__main__":
+    createVoiceWAV()
