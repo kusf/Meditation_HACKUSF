@@ -98,6 +98,6 @@ def apply_reverb(sound, delay_ms=100, decay=0.5, repeats=3):
 reverb_audio = apply_reverb(audio)
 
 # Export the new version
-reverb_audio.export("speech_with_reverb.wav", format="wav")
+reverb_audio.export(getPromptBridgePath(), format="wav")
 #print("done with reverb")   # Reverb voice
 #==================== reverb
