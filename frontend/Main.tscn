@@ -180,3 +180,13 @@ theme_override_font_sizes/font_size = 64
 text = "<Option 4>"
 autowrap_mode = 3
 clip_text = true
+
+[connection signal="pressed" from="MainUI/UI/MainUIControl/TwoPanel/Option1" to="." method="OnOption1Pressed"]
+[connection signal="pressed" from="MainUI/UI/MainUIControl/TwoPanel/Option2" to="." method="OnOption2Pressed"]
+[connection signal="pressed" from="MainUI/UI/MainUIControl/ThreePanel/Option1" to="." method="OnOption1Pressed"]
+[connection signal="pressed" from="MainUI/UI/MainUIControl/ThreePanel/Option2" to="." method="OnOption2Pressed"]
+[connection signal="pressed" from="MainUI/UI/MainUIControl/ThreePanel/Option3" to="." method="OnOption3Pressed"]
+[connection signal="pressed" from="MainUI/UI/MainUIControl/FourPanel/Option1" to="." method="OnOption1Pressed"]
+[connection signal="pressed" from="MainUI/UI/MainUIControl/FourPanel/Option2" to="." method="OnOption2Pressed"]
+[connection signal="pressed" from="MainUI/UI/MainUIControl/FourPanel/Option3" to="." method="OnOption3Pressed"]
+[connection signal="pressed" from="MainUI/UI/MainUIControl/FourPanel/Option4" to="." method="OnOption4Pressed"]
