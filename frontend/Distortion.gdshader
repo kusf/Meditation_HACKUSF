@@ -1,16 +1,12 @@
 shader_type canvas_item;
 
-void vertex() {
-	// Called for every vertex the material is visible on.
-}
+uniform float imageOffset = 10.0;
+uniform float imageStretch = 1.0;
+uniform float magnifier = 2.0;
 
 void fragment() {
-	vec2 UV = 
-	COLOR = texture(TEXTURE, UV); // Read from texture
-  	
+    float u = imageOffset * TEXTURE_PIXEL_SIZE.x;
+	vec2 newUV = vec2(UV.x + u, UV.y) / magnifier;
+	newUV.y += sin(0.04 * (UV.y) * cos(imageStretch));
+    COLOR = texture(TEXTURE, newUV);
 }
-
-//void light() {
-//	// Called for every pixel for every light affecting the CanvasItem.
-//	// Uncomment to replace the default light processing function with this one.
-//}

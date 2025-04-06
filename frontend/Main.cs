@@ -14,10 +14,12 @@ public partial class Main : Node
 	private Process cmdApp;
 	private AudioStreamPlayer3D voicePlayer;
 	private AudioStreamPlayer3D musicPlayer;
+	public ShaderMaterial shader;
 	private double deltaTime;
 	private const float PromptRefreshTime = 5f;
 	private string[] options;
 	private int oldID = -1;
+	private double shaderTime;
 
 	private string[] bones = new string[17] {
 		"nose",
@@ -133,13 +135,19 @@ public partial class Main : Node
 			Image image = Image.LoadFromFile(GetGeneratedImagePath());
 			StandardMaterial3D newTextureMaterial = new StandardMaterial3D();
 			newTextureMaterial.AlbedoTexture = ImageTexture.CreateFromImage(image);
-			//newTextureMaterial.NextPass = distortionShader;
+			newTextureMaterial.NextPass = shader;
 			GetChild<MeshInstance3D>(4).SetSurfaceOverrideMaterial(0, newTextureMaterial);
 			(musicPlayer.GetChild(intensity - 1) as AudioStreamPlayer).Play();
 			voicePlayer.Stream = AudioStreamWav.LoadFromFile(GetGeneratedVoicePath());
 			voicePlayer.Play();
 			panelControls[validIndex].Visible = true;
 		}
+
+		shaderTime += delta;
+		shader.SetShaderParameter("imageOffset", 24f * Math.Sin(shaderTime));
+		shader.SetShaderParameter("imageStretch", 2f * Math.Abs(Math.Cos(shaderTime) + 0.05f));
+		shader.SetShaderParameter("magnifier", (Math.Sin(shaderTime) / 2f) + 1f);
+
 	}
 
 	public override void _ExitTree()
