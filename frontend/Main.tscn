@@ -1,8 +1,13 @@
-[gd_scene load_steps=8 format=3 uid="uid://feaftpye0kht"]
+[gd_scene load_steps=13 format=3 uid="uid://feaftpye0kht"]
 
 [ext_resource type="Script" uid="uid://d3vyafkrw63vs" path="res://Main.cs" id="1_glv2v"]
 [ext_resource type="PackedScene" uid="uid://cy5otrj00nf2y" path="res://Materials/LowPolyModel.tscn" id="2_uu6xs"]
 [ext_resource type="FontFile" uid="uid://bwutqok366ifs" path="res://Fonts/Raleway-Regular.ttf" id="3_r0du0"]
+[ext_resource type="AudioStream" uid="uid://dog7i1oy7wj6a" path="res://assets/music/1.mp3" id="4_trn2v"]
+[ext_resource type="AudioStream" uid="uid://b2dd3n3r4w5x4" path="res://assets/music/2.mp3" id="5_03owx"]
+[ext_resource type="AudioStream" uid="uid://c5aapwdcqim3j" path="res://assets/music/3.mp3" id="6_wkp8b"]
+[ext_resource type="AudioStream" uid="uid://du4o2n14arlka" path="res://assets/music/4.mp3" id="7_20pc6"]
+[ext_resource type="AudioStream" uid="uid://bjet1xgvgx7dp" path="res://assets/music/5.mp3" id="8_5vvyt"]
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_uu6xs"]
 rayleigh_color = Color(0.294707, 0.398755, 0.592047, 1)
@@ -185,6 +190,23 @@ clip_text = true
 current = true
 
 [node name="VoicePlayer" type="AudioStreamPlayer3D" parent="."]
+
+[node name="MusicPlayer" type="AudioStreamPlayer3D" parent="."]
+
+[node name="Music1" type="AudioStreamPlayer" parent="MusicPlayer"]
+stream = ExtResource("4_trn2v")
+
+[node name="Music2" type="AudioStreamPlayer" parent="MusicPlayer"]
+stream = ExtResource("5_03owx")
+
+[node name="Music3" type="AudioStreamPlayer" parent="MusicPlayer"]
+stream = ExtResource("6_wkp8b")
+
+[node name="Music4" type="AudioStreamPlayer" parent="MusicPlayer"]
+stream = ExtResource("7_20pc6")
+
+[node name="Music5" type="AudioStreamPlayer" parent="MusicPlayer"]
+stream = ExtResource("8_5vvyt")
 
 [connection signal="pressed" from="MainUI/UI/MainUIControl/TwoPanel/Option1" to="." method="OnOption1Pressed"]
 [connection signal="pressed" from="MainUI/UI/MainUIControl/TwoPanel/Option2" to="." method="OnOption2Pressed"]
