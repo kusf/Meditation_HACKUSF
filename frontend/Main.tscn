@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://feaftpye0kht"]
+[gd_scene load_steps=17 format=3 uid="uid://feaftpye0kht"]
 
 [ext_resource type="Script" uid="uid://d3vyafkrw63vs" path="res://Main.cs" id="1_glv2v"]
 [ext_resource type="PackedScene" uid="uid://cy5otrj00nf2y" path="res://Materials/LowPolyModel.tscn" id="2_uu6xs"]
@@ -8,6 +8,10 @@
 [ext_resource type="AudioStream" uid="uid://c5aapwdcqim3j" path="res://assets/music/3.mp3" id="6_wkp8b"]
 [ext_resource type="AudioStream" uid="uid://du4o2n14arlka" path="res://assets/music/4.mp3" id="7_20pc6"]
 [ext_resource type="AudioStream" uid="uid://bjet1xgvgx7dp" path="res://assets/music/5.mp3" id="8_5vvyt"]
+[ext_resource type="PackedScene" uid="uid://byw2asy3mag1a" path="res://Materials/LowPolyModel_1.tscn" id="9_5vvyt"]
+[ext_resource type="PackedScene" uid="uid://btvewncjirkl" path="res://Materials/LowPolyModel_2.tscn" id="10_c6i3y"]
+[ext_resource type="PackedScene" uid="uid://c3nntk3l5c5b3" path="res://Materials/LowPolyModel_3.tscn" id="11_c2ibq"]
+[ext_resource type="PackedScene" uid="uid://ctvpgypkwrkng" path="res://Materials/LowPolyModel_4.tscn" id="12_j4qnp"]
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_uu6xs"]
 rayleigh_color = Color(0.294707, 0.398755, 0.592047, 1)
@@ -194,6 +198,7 @@ current = true
 [node name="VoicePlayer" type="AudioStreamPlayer3D" parent="."]
 
 [node name="MusicPlayer" type="AudioStreamPlayer3D" parent="."]
+volume_db = -20.0
 
 [node name="Music1" type="AudioStreamPlayer" parent="MusicPlayer"]
 stream = ExtResource("4_trn2v")
@@ -209,6 +214,17 @@ stream = ExtResource("7_20pc6")
 
 [node name="Music5" type="AudioStreamPlayer" parent="MusicPlayer"]
 stream = ExtResource("8_5vvyt")
+
+[node name="ModelContainers" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48.8892, 0, 0)
+
+[node name="LowPolyModel" parent="ModelContainers" instance=ExtResource("9_5vvyt")]
+
+[node name="LowPolyModel2" parent="ModelContainers" instance=ExtResource("10_c6i3y")]
+
+[node name="LowPolyModel3" parent="ModelContainers" instance=ExtResource("11_c2ibq")]
+
+[node name="LowPolyModel4" parent="ModelContainers" instance=ExtResource("12_j4qnp")]
 
 [connection signal="pressed" from="MainUI/UI/MainUIControl/TwoPanel/Option1" to="." method="OnOption1Pressed"]
 [connection signal="pressed" from="MainUI/UI/MainUIControl/TwoPanel/Option2" to="." method="OnOption2Pressed"]

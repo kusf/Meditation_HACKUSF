@@ -11,6 +11,8 @@ public partial class Main : Node
 	private Texture wallTexture;
 	private MeshInstance3D wallInstance;
 	private Control[] panelControls;
+	private Node3D modelContainers;
+	private Node3D mainModel;
 	private Process cmdApp;
 	private AudioStreamPlayer3D voicePlayer;
 	private AudioStreamPlayer3D musicPlayer;
@@ -20,6 +22,7 @@ public partial class Main : Node
 	private string[] options;
 	private int oldID = -1;
 	private double shaderTime;
+	private int displayIndex;
 
 	private string[] bones = new string[17] {
 		"nose",
@@ -84,13 +87,15 @@ public partial class Main : Node
 		voicePlayer = GetNode<AudioStreamPlayer3D>("VoicePlayer");
 		musicPlayer = GetNode<AudioStreamPlayer3D>("MusicPlayer");
 		panelControls = new Control[3] { GetNode("MainUI/UI/MainUIControl/TwoPanel") as Control, GetNode("MainUI/UI/MainUIControl/ThreePanel") as Control, GetNode("MainUI/UI/MainUIControl/FourPanel") as Control };
+		modelContainers = GetNode<Node3D>("ModelContainers");
+		mainModel = GetNode<Node3D>("LowPolyModel");
 		options = new string[4];
 	}
 
 	public override void _Process(double delta)
 	{
 		deltaTime += delta;
-		if (deltaTime >= PromptRefreshTime && !voicePlayer.Playing)
+		if (deltaTime >= PromptRefreshTime)
 		{
 			//run first prompt
 			//Json.ParseString(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "", "DataBridge", "DataBridge.json"));
@@ -108,28 +113,27 @@ public partial class Main : Node
 			GD.Print("Reading new JSON");
 			oldID = dataBridgeObj["id"];
 			string promptText = dataBridgeObj["text"];     //data extraction
-			GD.Print(dataBridgeObj);
 			int intensity = dataBridgeObj["intensity"];
-			int validIndex = 0;
+			displayIndex = 0;
 			for (int i = 0; i < 4; i++)
 			{
 				try
 				{
 					options[i] = dataBridgeObj["options"][i];
-					validIndex++;
+					displayIndex++;
 				}
 				catch (Exception e)
 				{
-					validIndex = i - 1;
+					displayIndex = i - 1;
 					break;
 				}
 			}
-			validIndex = Math.Clamp(validIndex, 0, panelControls.Length - 1);
+			displayIndex = Math.Clamp(displayIndex, 0, panelControls.Length - 1);
 			for (int i = 0; i < panelControls.Length; i++)
 				panelControls[i].Visible = false;
-			for (int i = 0; i < panelControls[validIndex].GetChildCount(); i++)
+			for (int i = 0; i < panelControls[displayIndex].GetChildCount(); i++)
 			{
-				Button button = panelControls[validIndex].GetChild(i) as Button;
+				Button button = panelControls[displayIndex].GetChild(i) as Button;
 				button.Text = options[i];
 			}
 			Image image = Image.LoadFromFile(GetGeneratedImagePath());
@@ -140,8 +144,10 @@ public partial class Main : Node
 			(musicPlayer.GetChild(intensity - 1) as AudioStreamPlayer).Play();
 			voicePlayer.Stream = AudioStreamWav.LoadFromFile(GetGeneratedVoicePath());
 			voicePlayer.Play();
-			panelControls[validIndex].Visible = true;
+			mainModel = InstanceFromId(modelContainers.GetChild(Random.Shared.Next(0, 3 + 1)).GetInstanceId()) as Node3D;
 		}
+		if (!voicePlayer.Playing)
+			panelControls[displayIndex].Visible = true;
 
 		shaderTime += delta;
 		shader.SetShaderParameter("imageOffset", 24f * Math.Sin(shaderTime));
@@ -163,7 +169,6 @@ public partial class Main : Node
 		Dictionary<string, object> jSonWritesDict = new Dictionary<string, object>();
 		jSonWritesDict.Add("prompt", option);
 		jSonWritesDict.Add("id", Random.Shared.Next(0, 9999 + 1));
-		GD.Print(option);
 		File.WriteAllText(GetPromptBridgePath(), JObject.FromObject(jSonWritesDict).ToString());
 	}
 

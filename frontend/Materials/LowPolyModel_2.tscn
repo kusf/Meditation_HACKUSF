@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://byw2asy3mag1a"]
+[gd_scene load_steps=2 format=3 uid="uid://btvewncjirkl"]
 
 [ext_resource type="PackedScene" uid="uid://2jrdco1u2s4i" path="res://Materials/final low poly character  rigged.blend" id="1_ff2cj"]
 
@@ -8,14 +8,16 @@
 visible = false
 
 [node name="Skeleton3D" parent="metarig" index="0"]
-bones/8/rotation = Quaternion(-0.148, -0.2, -1.189, 0.568)
-bones/31/rotation = Quaternion(-0.183, 0.22, 1.109, 0.568)
+transform = Transform3D(1, 0, 0, 0, 0.810921, -0.585156, 0, 0.585156, 0.810921, 0, 0, 0)
+bones/1/rotation = Quaternion(1.437, 0, 0, 0.999)
+bones/8/rotation = Quaternion(0.457, -0.26, -0.539, 0.568)
+bones/31/rotation = Quaternion(0.512, 0.11, 0.249, 0.568)
 
 [node name="Sphere" parent="metarig/Skeleton3D" index="0"]
-transform = Transform3D(1, 1.42109e-14, 2.84217e-14, -2.84217e-14, 1, 8.9407e-08, -5.68434e-14, -2.98023e-08, 1, 0.143035, 5.67058, 0.744156)
+transform = Transform3D(1, 2.33102e-07, -5.00692e-08, 1.89643e-08, -0.287108, -0.957898, -2.37663e-07, 0.957898, -0.287108, 0.143035, 2.72247, 1.86088)
 
 [node name="Sphere_001" parent="metarig/Skeleton3D" index="1"]
-transform = Transform3D(1, 1.42109e-14, 2.84217e-14, -2.84217e-14, 1, 8.9407e-08, -5.68434e-14, -2.98023e-08, 1, 0.143035, 5.67058, 0.744156)
+transform = Transform3D(1, 2.33102e-07, -5.00692e-08, 1.89643e-08, -0.287108, -0.957898, -2.37663e-07, 0.957898, -0.287108, 0.143035, 2.72247, 1.86088)
 
 [node name="Lamp_003" parent="." index="2"]
 visible = false

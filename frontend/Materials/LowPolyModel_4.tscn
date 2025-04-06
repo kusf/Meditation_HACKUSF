@@ -1,15 +1,19 @@
-[gd_scene load_steps=2 format=3 uid="uid://byw2asy3mag1a"]
+[gd_scene load_steps=2 format=3 uid="uid://ctvpgypkwrkng"]
 
-[ext_resource type="PackedScene" uid="uid://2jrdco1u2s4i" path="res://Materials/final low poly character  rigged.blend" id="1_ff2cj"]
+[ext_resource type="PackedScene" uid="uid://2jrdco1u2s4i" path="res://Materials/final low poly character  rigged.blend" id="1_lckfp"]
 
-[node name="LowPolyModel" instance=ExtResource("1_ff2cj")]
+[node name="LowPolyModel" instance=ExtResource("1_lckfp")]
 
 [node name="Plane" parent="." index="0"]
 visible = false
 
 [node name="Skeleton3D" parent="metarig" index="0"]
-bones/8/rotation = Quaternion(-0.148, -0.2, -1.189, 0.568)
-bones/31/rotation = Quaternion(-0.183, 0.22, 1.109, 0.568)
+bones/8/rotation = Quaternion(0.042, -0.27, -1.059, 0.568)
+bones/31/rotation = Quaternion(0.437, 0.06, 0.554, 0.568)
+bones/53/position = Vector3(0.432, 0.346, 0.883)
+bones/54/position = Vector3(-0.01, 1.056, 0)
+bones/54/rotation = Quaternion(0.569, -0.724, -0.014, 0.997)
+bones/55/rotation = Quaternion(-0.416, 1.706, -0.086, 0.858)
 
 [node name="Sphere" parent="metarig/Skeleton3D" index="0"]
 transform = Transform3D(1, 1.42109e-14, 2.84217e-14, -2.84217e-14, 1, 8.9407e-08, -5.68434e-14, -2.98023e-08, 1, 0.143035, 5.67058, 0.744156)
