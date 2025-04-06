@@ -23,6 +23,7 @@ public partial class Main : Node
 	private int oldID = -1;
 	private double shaderTime;
 	private int displayIndex;
+	private bool clickedButton = false;
 
 	private string[] bones = new string[17] {
 		"nose",
@@ -145,14 +146,15 @@ public partial class Main : Node
 			voicePlayer.Stream = AudioStreamWav.LoadFromFile(GetGeneratedVoicePath());
 			voicePlayer.Play();
 			mainModel = InstanceFromId(modelContainers.GetChild(Random.Shared.Next(0, 3 + 1)).GetInstanceId()) as Node3D;
+			clickedButton = false;
 		}
-		if (!voicePlayer.Playing)
+		if (!voicePlayer.Playing && !clickedButton)
 			panelControls[displayIndex].Visible = true;
 
-		shaderTime += delta;
-		shader.SetShaderParameter("imageOffset", 24f * Math.Sin(shaderTime));
-		shader.SetShaderParameter("imageStretch", 2f * Math.Abs(Math.Cos(shaderTime) + 0.05f));
-		shader.SetShaderParameter("magnifier", (Math.Sin(shaderTime) / 2f) + 1f);
+		//shaderTime += delta;
+		//shader.SetShaderParameter("imageOffset", 24f * Math.Sin(shaderTime));
+		//shader.SetShaderParameter("imageStretch", 2f * Math.Abs(Math.Cos(shaderTime) + 0.05f));
+		//shader.SetShaderParameter("magnifier", (Math.Sin(shaderTime) / 2f) + 1f);
 
 	}
 
@@ -170,7 +172,9 @@ public partial class Main : Node
 		jSonWritesDict.Add("prompt", option);
 		jSonWritesDict.Add("id", Random.Shared.Next(0, 9999 + 1));
 		File.WriteAllText(GetPromptBridgePath(), JObject.FromObject(jSonWritesDict).ToString());
-	}
+		clickedButton = true;
+
+    }
 
 	//private void ExtractSkeletonJSON()
 	//{
