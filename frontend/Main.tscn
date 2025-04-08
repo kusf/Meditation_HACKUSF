@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://feaftpye0kht"]
+[gd_scene load_steps=20 format=3 uid="uid://feaftpye0kht"]
 
 [ext_resource type="Script" uid="uid://d3vyafkrw63vs" path="res://Main.cs" id="1_glv2v"]
 [ext_resource type="PackedScene" uid="uid://cy5otrj00nf2y" path="res://Materials/LowPolyModel.tscn" id="2_uu6xs"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://btvewncjirkl" path="res://Materials/LowPolyModel_2.tscn" id="10_c6i3y"]
 [ext_resource type="PackedScene" uid="uid://c3nntk3l5c5b3" path="res://Materials/LowPolyModel_3.tscn" id="11_c2ibq"]
 [ext_resource type="PackedScene" uid="uid://ctvpgypkwrkng" path="res://Materials/LowPolyModel_4.tscn" id="12_j4qnp"]
+[ext_resource type="Shader" uid="uid://ceusq8chwkjdj" path="res://Distortion.gdshader" id="13_c6i3y"]
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_uu6xs"]
 rayleigh_color = Color(0.294707, 0.398755, 0.592047, 1)
@@ -25,18 +26,46 @@ sky = SubResource("Sky_r0du0")
 ambient_light_source = 3
 ambient_light_color = Color(0.959473, 0.959473, 0.959473, 1)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_c6i3y"]
+shader = ExtResource("13_c6i3y")
+shader_parameter/imageOffset = 10.0
+shader_parameter/imageStretch = 1.0
+shader_parameter/magnifier = 2.0
+
 [sub_resource type="PlaneMesh" id="PlaneMesh_uu6xs"]
 size = Vector2(32, 32)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_c2ibq"]
+shader = ExtResource("13_c6i3y")
+shader_parameter/imageOffset = 10.0
+shader_parameter/imageStretch = 1.0
+shader_parameter/magnifier = 2.0
 
 [node name="MeditationScene" type="Node3D"]
 script = ExtResource("1_glv2v")
 
 [node name="MainCamera" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0176628, 4.0088, 6.49978)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 6.5)
 current = true
 
-[node name="LowPolyModel" parent="." instance=ExtResource("2_uu6xs")]
-transform = Transform3D(0.618692, 0.0300289, 0.422869, -0.00563389, 0.748632, -0.0449193, -0.423897, 0.0338784, 0.617789, -4.91599, 1.07446, 0.553848)
+[node name="ModelsContainer" type="Node3D" parent="."]
+transform = Transform3D(0.74243, 0.0360347, 0.507443, -0.00676067, 0.898359, -0.0539031, -0.508676, 0.0406541, 0.741347, -5, 1, -2)
+
+[node name="LowPolyModel" parent="ModelsContainer" instance=ExtResource("9_5vvyt")]
+visible = false
+
+[node name="LowPolyModel2" parent="ModelsContainer" instance=ExtResource("10_c6i3y")]
+visible = false
+
+[node name="LowPolyModel3" parent="ModelsContainer" instance=ExtResource("11_c2ibq")]
+visible = false
+
+[node name="LowPolyModel4" parent="ModelsContainer" instance=ExtResource("12_j4qnp")]
+visible = false
+
+[node name="LowPolyModel5" parent="ModelsContainer" instance=ExtResource("2_uu6xs")]
+transform = Transform3D(0.75, -3.53903e-08, -2.38419e-07, 5.58794e-09, 0.75, -5.40167e-08, 0, -1.86265e-09, 0.749999, 0, 0, 0)
+visible = false
 
 [node name="Environment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_uu6xs")
@@ -45,13 +74,22 @@ environment = SubResource("Environment_uu6xs")
 directional_shadow_mode = 0
 
 [node name="BackgroundWall" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 4, -4.971)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 4, -5)
+material_overlay = SubResource("ShaderMaterial_c6i3y")
 mesh = SubResource("PlaneMesh_uu6xs")
 
 [node name="MainUI" type="Node" parent="."]
 
 [node name="UI" type="CanvasLayer" parent="MainUI"]
 layer = 2
+
+[node name="FadeObj" type="ColorRect" parent="MainUI/UI"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
 
 [node name="MainUIControl" type="Control" parent="MainUI/UI"]
 layout_mode = 3
@@ -70,10 +108,10 @@ offset_bottom = -0.0950928
 [node name="Option1" type="Button" parent="MainUI/UI/MainUIControl/TwoPanel"]
 visibility_layer = 9
 layout_mode = 0
-offset_left = 150.0
-offset_top = 650.0
-offset_right = 850.0
-offset_bottom = 1050.0
+offset_left = 130.0
+offset_top = 710.0
+offset_right = 870.0
+offset_bottom = 1030.0
 theme_override_fonts/font = ExtResource("3_trn2v")
 theme_override_font_sizes/font_size = 48
 text = "<Option 1>"
@@ -82,10 +120,10 @@ clip_text = true
 
 [node name="Option2" type="Button" parent="MainUI/UI/MainUIControl/TwoPanel"]
 layout_mode = 0
-offset_left = 1070.0
-offset_top = 650.0
+offset_left = 1030.0
+offset_top = 710.0
 offset_right = 1770.0
-offset_bottom = 1050.0
+offset_bottom = 1030.0
 theme_override_fonts/font = ExtResource("3_trn2v")
 theme_override_font_sizes/font_size = 48
 text = "<Option 2>"
@@ -103,9 +141,9 @@ offset_bottom = -0.0950928
 [node name="Option1" type="Button" parent="MainUI/UI/MainUIControl/ThreePanel"]
 layout_mode = 0
 offset_left = 32.0
-offset_top = 550.0
+offset_top = 640.0
 offset_right = 592.0
-offset_bottom = 1050.0
+offset_bottom = 1040.0
 theme_override_fonts/font = ExtResource("3_trn2v")
 theme_override_font_sizes/font_size = 48
 text = "<Option 1>"
@@ -115,9 +153,9 @@ clip_text = true
 [node name="Option2" type="Button" parent="MainUI/UI/MainUIControl/ThreePanel"]
 layout_mode = 0
 offset_left = 672.0
-offset_top = 550.0
+offset_top = 640.0
 offset_right = 1232.0
-offset_bottom = 1050.0
+offset_bottom = 1040.0
 theme_override_fonts/font = ExtResource("3_trn2v")
 theme_override_font_sizes/font_size = 48
 text = "<Option 2>"
@@ -127,9 +165,9 @@ clip_text = true
 [node name="Option3" type="Button" parent="MainUI/UI/MainUIControl/ThreePanel"]
 layout_mode = 0
 offset_left = 1312.0
-offset_top = 550.0
+offset_top = 640.0
 offset_right = 1872.0
-offset_bottom = 1050.0
+offset_bottom = 1040.0
 theme_override_fonts/font = ExtResource("3_trn2v")
 theme_override_font_sizes/font_size = 48
 text = "<Option 3>"
@@ -147,9 +185,9 @@ offset_bottom = -0.0950928
 [node name="Option1" type="Button" parent="MainUI/UI/MainUIControl/FourPanel"]
 layout_mode = 0
 offset_left = 32.0
-offset_top = 460.0
-offset_right = 472.0
-offset_bottom = 1060.0
+offset_top = 570.0
+offset_right = 452.0
+offset_bottom = 1050.0
 theme_override_fonts/font = ExtResource("3_trn2v")
 theme_override_font_sizes/font_size = 48
 text = "<Option 1>"
@@ -159,9 +197,9 @@ clip_text = true
 [node name="Option2" type="Button" parent="MainUI/UI/MainUIControl/FourPanel"]
 layout_mode = 0
 offset_left = 504.0
-offset_top = 460.0
-offset_right = 944.0
-offset_bottom = 1060.0
+offset_top = 570.0
+offset_right = 924.0
+offset_bottom = 1050.0
 theme_override_fonts/font = ExtResource("3_trn2v")
 theme_override_font_sizes/font_size = 48
 text = "<Option 2>"
@@ -171,9 +209,9 @@ clip_text = true
 [node name="Option3" type="Button" parent="MainUI/UI/MainUIControl/FourPanel"]
 layout_mode = 0
 offset_left = 976.0
-offset_top = 460.0
-offset_right = 1416.0
-offset_bottom = 1060.0
+offset_top = 570.0
+offset_right = 1396.0
+offset_bottom = 1050.0
 theme_override_fonts/font = ExtResource("3_trn2v")
 theme_override_font_sizes/font_size = 48
 text = "<Option 3>"
@@ -183,9 +221,9 @@ clip_text = true
 [node name="Option4" type="Button" parent="MainUI/UI/MainUIControl/FourPanel"]
 layout_mode = 0
 offset_left = 1448.0
-offset_top = 460.0
-offset_right = 1888.0
-offset_bottom = 1060.0
+offset_top = 570.0
+offset_right = 1868.0
+offset_bottom = 1050.0
 theme_override_fonts/font = ExtResource("3_trn2v")
 theme_override_font_sizes/font_size = 48
 text = "<Option 4>"
@@ -197,34 +235,28 @@ current = true
 
 [node name="VoicePlayer" type="AudioStreamPlayer3D" parent="."]
 
-[node name="MusicPlayer" type="AudioStreamPlayer3D" parent="."]
-volume_db = -20.0
+[node name="MusicPlayers" type="Node" parent="."]
 
-[node name="Music1" type="AudioStreamPlayer" parent="MusicPlayer"]
+[node name="Music1" type="AudioStreamPlayer" parent="MusicPlayers"]
 stream = ExtResource("4_trn2v")
 
-[node name="Music2" type="AudioStreamPlayer" parent="MusicPlayer"]
+[node name="Music2" type="AudioStreamPlayer" parent="MusicPlayers"]
 stream = ExtResource("5_03owx")
 
-[node name="Music3" type="AudioStreamPlayer" parent="MusicPlayer"]
+[node name="Music3" type="AudioStreamPlayer" parent="MusicPlayers"]
 stream = ExtResource("6_wkp8b")
 
-[node name="Music4" type="AudioStreamPlayer" parent="MusicPlayer"]
+[node name="Music4" type="AudioStreamPlayer" parent="MusicPlayers"]
 stream = ExtResource("7_20pc6")
 
-[node name="Music5" type="AudioStreamPlayer" parent="MusicPlayer"]
+[node name="Music5" type="AudioStreamPlayer" parent="MusicPlayers"]
 stream = ExtResource("8_5vvyt")
 
-[node name="ModelContainers" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48.8892, 0, 0)
-
-[node name="LowPolyModel" parent="ModelContainers" instance=ExtResource("9_5vvyt")]
-
-[node name="LowPolyModel2" parent="ModelContainers" instance=ExtResource("10_c6i3y")]
-
-[node name="LowPolyModel3" parent="ModelContainers" instance=ExtResource("11_c2ibq")]
-
-[node name="LowPolyModel4" parent="ModelContainers" instance=ExtResource("12_j4qnp")]
+[node name="ShaderMaterialContainer" type="ColorRect" parent="."]
+visible = false
+material = SubResource("ShaderMaterial_c2ibq")
+offset_right = 40.0
+offset_bottom = 40.0
 
 [connection signal="pressed" from="MainUI/UI/MainUIControl/TwoPanel/Option1" to="." method="OnOption1Pressed"]
 [connection signal="pressed" from="MainUI/UI/MainUIControl/TwoPanel/Option2" to="." method="OnOption2Pressed"]

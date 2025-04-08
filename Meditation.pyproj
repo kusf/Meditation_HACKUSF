@@ -22,13 +22,13 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="backend\generate_image.py" />
     <Compile Include="backend\promptBridgeReader.py" />
     <Compile Include="backend\dataBridgeWriter.py" />
     <Compile Include="backend\human_pose_detection\human_pose_detection.py" />
     <Compile Include="backend\llm.py" />
     <Compile Include="backend\Meditation.py" />
     <Compile Include="backend\voice.py" />
-    <Compile Include="ImageGenertaion\ImageGeneration.py" />
     <Compile Include="venv\Lib\site-packages\annotated_types\test_cases.py" />
     <Compile Include="venv\Lib\site-packages\annotated_types\__init__.py" />
     <Compile Include="venv\Lib\site-packages\anyio\abc\_eventloop.py" />
@@ -1193,10 +1193,8 @@
     <Content Include="backend\human_pose_detection\Dataset\pexels-tima-miroshnichenko-6388396.mp4" />
     <Content Include="backend\human_pose_detection\Dataset\production ID_4945566.mp4" />
     <Content Include="backend\human_pose_detection\README.md" />
-    <Content Include="backend\README.md" />
     <Content Include="DataBridge\DataBridge.json" />
     <Content Include="DataBridge\PromptBridge.json" />
-    <Content Include="ImageGenertaion\test.png" />
     <Content Include="README.md" />
     <Content Include="requirements.txt" />
     <Content Include="venv\Lib\site-packages\annotated_types-0.7.0.dist-info\INSTALLER" />

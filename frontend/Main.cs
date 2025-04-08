@@ -5,25 +5,36 @@ using System.IO;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 
 public partial class Main : Node
 {
 	private Texture wallTexture;
 	private MeshInstance3D wallInstance;
 	private Control[] panelControls;
-	private Node3D modelContainers;
-	private Node3D mainModel;
+	private Node3D modelsContainer;
 	private Process cmdApp;
 	private AudioStreamPlayer3D voicePlayer;
-	private AudioStreamPlayer3D musicPlayer;
+	private Node musicPlayers;
 	public ShaderMaterial shader;
+	public ColorRect fadeObj;
 	private double deltaTime;
 	private const float PromptRefreshTime = 5f;
 	private string[] options;
 	private int oldID = -1;
 	private double shaderTime;
 	private int displayIndex;
-	private bool clickedButton = false;
+	private bool clickedButton = true;
+	private FadeState fadeState;
+	private double fadeTimer = 0;
+	private const float FadeTime = 5f;
+
+	private enum FadeState
+	{
+		None,
+		FadeIn,		//frame comes in
+		FadeOut		//frame goes to black
+	}
 
 	private string[] bones = new string[17] {
 		"nose",
@@ -47,54 +58,73 @@ public partial class Main : Node
 
 	private string GetDataBridgePath()
 	{
-		// string[] pathPieces = { "C:", "Contents", "Projects", "Hackathons", "Meditation", "DataBridge", "DataBridge.json" };
-		// return Path.Combine(pathPieces);
-		return "/Users/cool/Documents/GitHub/Meditation_HACKUSF/DataBridge/DataBridge.json";
+		if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+			return "/Users/cool/Documents/GitHub/Meditation_HACKUSF/DataBridge/DataBridge.json";
+
+		string[] pathPieces = { "C:", "Contents", "Projects", "Hackathons", "Meditation", "DataBridge", "DataBridge.json" };
+		return Path.Combine(pathPieces);
 	}
 
 	private string GetPromptBridgePath()
 	{
-		// string[] pathPieces = { "C:", "Contents", "Projects", "Hackathons", "Meditation", "DataBridge", "PromptBridge.json" };
-		// return Path.Combine(pathPieces);
-		return "/Users/cool/Documents/GitHub/Meditation_HACKUSF/DataBridge/PromptBridge.json";
+		if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+			return "/Users/cool/Documents/GitHub/Meditation_HACKUSF/DataBridge/PromptBridge.json";
+
+		string[] pathPieces = { "C:", "Contents", "Projects", "Hackathons", "Meditation", "DataBridge", "PromptBridge.json" };
+		return Path.Combine(pathPieces);
 	}
 
 	private string GetGeneratedImagePath()
 	{
-		// string[] pathPieces = { "C:", "Contents", "Projects", "Hackathons", "Meditation", "DataBridge", "image.png" };
-		// return Path.Combine(pathPieces);
-		return "/Users/cool/Documents/GitHub/Meditation_HACKUSF/backend/image.png";
+		if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+			return "/Users/cool/Documents/GitHub/Meditation_HACKUSF/backend/image.png";
+
+		string[] pathPieces = { "C:", "Contents", "Projects", "Hackathons", "Meditation", "DataBridge", "image.png" };
+		return Path.Combine(pathPieces);
 	}
 
 	private string GetGeneratedVoicePath()
 	{
-		// string[] pathPieces = { "C:", "Contents", "Projects", "Hackathons", "Meditation", "DataBridge", "voice.wav" };
-		// return Path.Combine(pathPieces);
-		return "/Users/cool/Documents/GitHub/Meditation_HACKUSF/DataBridge/voice.wav";
+		if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+			return "/Users/cool/Documents/GitHub/Meditation_HACKUSF/DataBridge/voice.wav";
+
+		string[] pathPieces = { "C:", "Contents", "Projects", "Hackathons", "Meditation", "DataBridge", "voice.wav" };
+		return Path.Combine(pathPieces);
 	}
 
 	private string GetBackendPath()
 	{
-		// string[] pathPieces = { "C:", "Contents", "Projects", "Hackathons", "Meditation", "backend", "Meditation.py" };
-		// return Path.Combine(pathPieces);
-		return "/Users/cool/Documents/GitHub/Meditation_HACKUSF/backend/Meditation.py";
+		if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+			return "/Users/cool/Documents/GitHub/Meditation_HACKUSF/backend/Meditation.py";
+
+		string[] pathPieces = { "C:", "Contents", "Projects", "Hackathons", "Meditation", "backend", "Meditation.py" };
+		return Path.Combine(pathPieces);
 	}
 
 	public override void _Ready()
 	{
 		//string strCmdText;
-		//strCmdText = "C:\\Contents\\Projects\\Hackathons\\Meditation\\venv\\Scripts\\python.exe C:/Contents/Projects/Hackathons/Meditation/backend/Meditation.py";
+		//strCmdText = GetBackendPath();
 		//cmdApp = Process.Start("CMD.exe", strCmdText);
+
 		voicePlayer = GetNode<AudioStreamPlayer3D>("VoicePlayer");
-		musicPlayer = GetNode<AudioStreamPlayer3D>("MusicPlayer");
+		musicPlayers = GetNode<Node>("MusicPlayers");
 		panelControls = new Control[3] { GetNode("MainUI/UI/MainUIControl/TwoPanel") as Control, GetNode("MainUI/UI/MainUIControl/ThreePanel") as Control, GetNode("MainUI/UI/MainUIControl/FourPanel") as Control };
-		modelContainers = GetNode<Node3D>("ModelContainers");
-		mainModel = GetNode<Node3D>("LowPolyModel");
+		modelsContainer = GetNode<Node3D>("ModelsContainer");
 		options = new string[4];
+		fadeObj = GetNode<ColorRect>("MainUI/UI/FadeObj");
+		shader = GetNode<ColorRect>("ShaderMaterialContainer").Material as ShaderMaterial;
 	}
 
 	public override void _Process(double delta)
 	{
+		shaderTime += delta;
+		shader.SetShaderParameter("imageOffset", 24f * (float)Math.Sin(shaderTime));
+		shader.SetShaderParameter("imageStretch", 2f * Math.Abs((float)Math.Cos(shaderTime) + 0.05f));
+		shader.SetShaderParameter("magnifier", ((float)Math.Sin(shaderTime) / 2f) + 1f);
+		if (shaderTime >= 360f)
+			shaderTime -= 360f;
+		
 		deltaTime += delta;
 		if (deltaTime >= PromptRefreshTime)
 		{
@@ -141,15 +171,43 @@ public partial class Main : Node
 			StandardMaterial3D newTextureMaterial = new StandardMaterial3D();
 			newTextureMaterial.AlbedoTexture = ImageTexture.CreateFromImage(image);
 			newTextureMaterial.NextPass = shader;
-			GetChild<MeshInstance3D>(4).SetSurfaceOverrideMaterial(0, newTextureMaterial);
-			(musicPlayer.GetChild(intensity - 1) as AudioStreamPlayer).Play();
+			GetNode<MeshInstance3D>("BackgroundWall").MaterialOverlay = newTextureMaterial;
+			AudioStreamPlayer ambiencePlayer = musicPlayers.GetChild(intensity - 1) as AudioStreamPlayer;
+			ambiencePlayer.VolumeDb = -8f;
+			ambiencePlayer.Play();
 			voicePlayer.Stream = AudioStreamWav.LoadFromFile(GetGeneratedVoicePath());
 			voicePlayer.Play();
-			mainModel = InstanceFromId(modelContainers.GetChild(Random.Shared.Next(0, 3 + 1)).GetInstanceId()) as Node3D;
+			(modelsContainer.GetChild(Random.Shared.Next(0, 3 + 1)) as Node3D).Visible = true;
 			clickedButton = false;
+			fadeState = FadeState.FadeIn;
 		}
 		if (!voicePlayer.Playing && !clickedButton)
 			panelControls[displayIndex].Visible = true;
+
+		if (fadeState == FadeState.None)
+			fadeTimer = 0;
+		else if (fadeState == FadeState.FadeIn)
+		{
+			fadeTimer += delta;
+			fadeObj.Color = new Color(fadeObj.Color, 1f - ((float)fadeTimer / FadeTime));
+			if (fadeTimer >= FadeTime)
+			{
+				fadeState = FadeState.None;
+				fadeTimer = 0;
+			}
+		}
+		else
+		{
+			fadeTimer += delta;
+			fadeObj.Color = new Color(fadeObj.Color, (float)fadeTimer / FadeTime);
+			if (fadeTimer >= FadeTime)
+			{
+				for (int i = 0; i < modelsContainer.GetChildCount(); i++)
+					(modelsContainer.GetChild(i) as Node3D).Visible = false;
+				fadeState = FadeState.None;
+				fadeTimer = 0;
+			}
+		}
 	}
 
 	private void SetUpPromptBridge(string option)
@@ -157,13 +215,14 @@ public partial class Main : Node
 		for (int i = 0; i < panelControls.Length; i++)
 			panelControls[i].Visible = false;
 		
-		Dictionary<string, object> jSonWritesDict = new Dictionary<string, object>();
-		jSonWritesDict.Add("prompt", option);
-		jSonWritesDict.Add("id", Random.Shared.Next(0, 9999 + 1));
+		Dictionary<string, object> jSonWritesDict = new Dictionary<string, object>() {
+			{ "prompt", option },
+			{ "id", Random.Shared.Next(0, 9999 + 1) }
+		};
 		File.WriteAllText(GetPromptBridgePath(), JObject.FromObject(jSonWritesDict).ToString());
+		fadeState = FadeState.FadeOut;
 		clickedButton = true;
-
-    }
+	}
 
 	private void OnOption1Pressed()
 	{
