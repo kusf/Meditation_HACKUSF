@@ -93,23 +93,23 @@ color = Color(0, 0, 0, 1)
 
 [node name="MainUIControl" type="Control" parent="MainUI/UI"]
 layout_mode = 3
-anchors_preset = 0
-offset_right = 1155.0
-offset_bottom = 655.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="TwoPanel" type="Control" parent="MainUI/UI/MainUIControl"]
 visible = false
 layout_mode = 1
-anchor_right = 1.662
-anchor_bottom = 1.649
-offset_right = 0.389893
-offset_bottom = -0.0950928
+anchor_right = 1.0
+anchor_bottom = 1.0
 
 [node name="Option1" type="Button" parent="MainUI/UI/MainUIControl/TwoPanel"]
 visibility_layer = 9
 layout_mode = 0
 offset_left = 130.0
-offset_top = 710.0
+offset_top = 750.0
 offset_right = 870.0
 offset_bottom = 1030.0
 theme_override_fonts/font = ExtResource("3_trn2v")
@@ -121,7 +121,7 @@ clip_text = true
 [node name="Option2" type="Button" parent="MainUI/UI/MainUIControl/TwoPanel"]
 layout_mode = 0
 offset_left = 1030.0
-offset_top = 710.0
+offset_top = 750.0
 offset_right = 1770.0
 offset_bottom = 1030.0
 theme_override_fonts/font = ExtResource("3_trn2v")
@@ -133,15 +133,15 @@ clip_text = true
 [node name="ThreePanel" type="Control" parent="MainUI/UI/MainUIControl"]
 visible = false
 layout_mode = 1
-anchor_right = 1.662
-anchor_bottom = 1.649
-offset_right = 0.389893
-offset_bottom = -0.0950928
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1.0
+offset_bottom = 1.0
 
 [node name="Option1" type="Button" parent="MainUI/UI/MainUIControl/ThreePanel"]
 layout_mode = 0
 offset_left = 32.0
-offset_top = 640.0
+offset_top = 700.0
 offset_right = 592.0
 offset_bottom = 1040.0
 theme_override_fonts/font = ExtResource("3_trn2v")
@@ -153,7 +153,7 @@ clip_text = true
 [node name="Option2" type="Button" parent="MainUI/UI/MainUIControl/ThreePanel"]
 layout_mode = 0
 offset_left = 672.0
-offset_top = 640.0
+offset_top = 700.0
 offset_right = 1232.0
 offset_bottom = 1040.0
 theme_override_fonts/font = ExtResource("3_trn2v")
@@ -165,7 +165,7 @@ clip_text = true
 [node name="Option3" type="Button" parent="MainUI/UI/MainUIControl/ThreePanel"]
 layout_mode = 0
 offset_left = 1312.0
-offset_top = 640.0
+offset_top = 700.0
 offset_right = 1872.0
 offset_bottom = 1040.0
 theme_override_fonts/font = ExtResource("3_trn2v")
@@ -177,15 +177,14 @@ clip_text = true
 [node name="FourPanel" type="Control" parent="MainUI/UI/MainUIControl"]
 visible = false
 layout_mode = 1
-anchor_right = 1.662
-anchor_bottom = 1.649
-offset_right = 0.389893
-offset_bottom = -0.0950928
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1.0
 
 [node name="Option1" type="Button" parent="MainUI/UI/MainUIControl/FourPanel"]
 layout_mode = 0
 offset_left = 32.0
-offset_top = 570.0
+offset_top = 660.0
 offset_right = 452.0
 offset_bottom = 1050.0
 theme_override_fonts/font = ExtResource("3_trn2v")
@@ -197,7 +196,7 @@ clip_text = true
 [node name="Option2" type="Button" parent="MainUI/UI/MainUIControl/FourPanel"]
 layout_mode = 0
 offset_left = 504.0
-offset_top = 570.0
+offset_top = 660.0
 offset_right = 924.0
 offset_bottom = 1050.0
 theme_override_fonts/font = ExtResource("3_trn2v")
@@ -209,7 +208,7 @@ clip_text = true
 [node name="Option3" type="Button" parent="MainUI/UI/MainUIControl/FourPanel"]
 layout_mode = 0
 offset_left = 976.0
-offset_top = 570.0
+offset_top = 660.0
 offset_right = 1396.0
 offset_bottom = 1050.0
 theme_override_fonts/font = ExtResource("3_trn2v")
@@ -221,7 +220,7 @@ clip_text = true
 [node name="Option4" type="Button" parent="MainUI/UI/MainUIControl/FourPanel"]
 layout_mode = 0
 offset_left = 1448.0
-offset_top = 570.0
+offset_top = 660.0
 offset_right = 1868.0
 offset_bottom = 1050.0
 theme_override_fonts/font = ExtResource("3_trn2v")
