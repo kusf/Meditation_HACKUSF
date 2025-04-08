@@ -8,6 +8,8 @@ This project showcases multiple AI running based off of each other all chaining 
 - Using LLMs for a variety of purposes to create coherent responses
 - Proper understanding of AI flow
 
+![An exmaple of the options shown that will be passed as the continuation of the prompt. This example also showcases the AI running in the background.](https://github.com/kusf/Meditation_HACKUSF/blob/main/Image_1.png)
+
 ## Requirements
 To install python requirements
 ```bash
@@ -24,3 +26,9 @@ Open the project and run.
 
 Note: The backend must be run first to generate the first prompt before the frontend would respond to it. Both must be running concurrently for communication to happen properly. If you're attempting to use this project on your own make sure to set the filepaths in both the backend and frontend properly.
 
+
+# Example Images
+
+![An example of some of the visuals of the application.](https://github.com/kusf/Meditation_HACKUSF/blob/main/Image_2.png)
+
+![An example of some of the options shown.](https://github.com/kusf/Meditation_HACKUSF/blob/main/Image_3.png)
